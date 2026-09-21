@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DS Practical Programs</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101216;color:#f4f4f5;font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:10;padding:18px;background:#181b21;border-bottom:1px solid #30343c}
+h1{margin:0 0 6px;font-size:25px}
+.sub{color:#9ca3af;font-size:13px;margin-bottom:14px}
+#search{width:100%;padding:12px 14px;background:#0e1014;color:#fff;border:1px solid #3a404b;border-radius:9px;font-size:15px}
+main{max-width:1050px;margin:auto;padding:22px}
+section{margin-bottom:28px}
+h2{font-size:18px;color:#d9dde5;margin:8px 0 12px}
+.program{border:1px solid #30343c;border-radius:10px;overflow:hidden;background:#181b21;margin:9px 0}
+.program-header{width:100%;border:0;background:none;color:#fff;padding:15px 16px;text-align:left;display:flex;justify-content:space-between;cursor:pointer;font-size:16px;font-weight:600}
+.program-header:hover{background:#1e222a}
+.arrow{color:#9aa2b1;transition:.15s}
+.program.open .arrow{transform:rotate(90deg)}
+.program-body{display:none;border-top:1px solid #30343c;padding:14px;position:relative}
+.program.open .program-body{display:block}
+pre{margin:0;padding:16px;background:#090b0e;border:1px solid #292e36;border-radius:8px;white-space:pre-wrap;overflow:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.45}
+.copy{position:absolute;right:24px;top:24px;z-index:1;background:#2b6fff;color:white;border:0;border-radius:7px;padding:8px 12px;font-weight:700;cursor:pointer}
+.copy:hover{background:#1f5ddd}
+.copied{display:none;position:absolute;right:24px;top:62px;color:#7ee787;font-size:12px}
+.empty{display:none;text-align:center;color:#9ca3af;padding:25px}
+</style>
+<script>
+async function copyProgram(btn, id){
+  const text = document.getElementById("code-"+id).innerText;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch(e) {
+    const ta=document.createElement("textarea");
+    ta.value=text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+  }
+  const msg=btn.parentElement.querySelector(".copied");
+  msg.style.display="block";
+  setTimeout(()=>msg.style.display="none",1200);
+}
+function toggleProgram(btn){
+  btn.parentElement.classList.toggle("open");
+}
+function searchPrograms(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  let shown=0;
+  document.querySelectorAll(".program").forEach(p=>{
+    const ok=!q || p.innerText.toLowerCase().includes(q);
+    p.style.display=ok?"block":"none";
+    if(ok) shown++;
+  });
+  document.getElementById("empty").style.display=shown?"none":"block";
+}
+</script>
+</head>
+<body>
+<header>
+<h1>DS Practical Programs</h1>
+<div class="sub">Single-click to open • COPY CODE to copy the complete program</div>
+<input id="search" oninput="searchPrograms()" placeholder="Search: Linear Search, Stack, Merge Sort...">
+</header>
+<main>
+<section><h2>SEARCHING ASSIGNMENT 1</h2>
+    <article class="program" data-title="1. linear search">
+      <button class="program-header" onclick="toggleProgram(this)">
+        <span>1. Linear Search</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="program-body">
+        <button class="copy" onclick="copyProgram(this, 0)">COPY CODE</button>
+        <pre id="code-0">1) Linear Search 
+
+#include&lt;stdio.h&gt;
+int linearsearch (int a[],int n,int key)
+{
+int i;
+for(i=0;i&lt;n;i++)
+if(a[i]==key)
+return i;
+return -1;
+}
+void main()
+{
+int a[10],n,i,key,pos;
+printf(&quot;\nHow many elements: &quot;);
+scanf(&quot;%d&quot;,&amp;n);
+for(i=0;i&lt;n;i++)
+{
+printf(&quot;\nEnter the element: &quot;);
+scanf(&quot;%d&quot;,&amp;a[i]);
+}
+printf(&quot;\nEnter the element to be searched:&quot;);
+scanf(&quot;%d&quot;,&amp;key);
+pos=linearsearch(a,n,key);
+if(pos==-1)
+printf(&quot;\nElement not found&quot;);
+else
+printf(&quot;\nElement found at position %d&quot;,pos);
+}
+-------------------------------------------------------------------------------</pre>
+        <div class="copied">Copied ✓</div>
+      </div>
+    </article>
+    
+    <article class="program" data-title="2. binary search">
+      <button class="program-header" onclick="toggleProgram(this)">
+        <span>2. Binary Search</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="program-body">
+        <button class="copy" onclick="copyProgram(this, 1)">COPY CODE</button>
+        <pre id="code-1">2) Binary Search 
+
+#include&lt;stdio.h&gt;
+int binarysearch(int a[20],int n,int key)
+{
+   int top,mid,bottom;
+   top=0;
+   bottom=n-1;
+   while(top&lt;=bottom)
+   {
+     mid=(top+bottom)/2;
+     if(key==a[mid]) 
+      return mid;
+     else
+       if(key&lt;a[mid])
+         bottom=mid-1;
+       else 
+       top=mid+1;
+      }
+      return-1;
+    
+    }
+void Bubblesort(int a[20],int n)
+{
+  int i,temp,pass;
+  for(pass=1;pass&lt;n;pass++)
+  for(i=0;i&lt;n-pass-1;i++)
+  {
+    if(a[i]&gt;a[i+1])
+       temp=a[i];
+       a[i]=a[i+1];
+       a[i+1]=temp;
+  }
+}     
+void main()
+{
+   int a[20],i,n,key,pos;
+   printf(&quot;\nHow many elements:&quot;);
+   scanf(&quot;%d&quot;,&amp;n);
+   for(i=0;i&lt;n;i++)
+   {
+     printf(&quot;Enter the elements:&quot;);
+     scanf(&quot;%d&quot;,&amp;a[i]);
+     }
+   Bubblesort(a,n);
+   printf(&quot;\nEnter the key to by searched:&quot;);
+   scanf(&quot;%d&quot;,&amp;key);
+   pos=binarysearch(a,n,key);
+   if(pos==-1)
+     printf(&quot;\nElement not found:&quot;);
+   else
+     printf(&quot;\nElement found at position %d&quot;,pos);
+     }
+
+----------------------------------------------------------------</pre>
+        <div class="copied">Copied ✓</div>
+      </div>
+    </article>
+    
+    <article class="program" data-title="3. student file + binary search">
+      <button class="program-header" onclick="toggleProgram(this)">
+        <span>3. Student File + Binary Search</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="program-body">
+        <button class="copy" onclick="copyProgram(this, 2)">COPY CODE</button>
+        <pre id="code-2">3) Read the data from file &#x27;student.txt&#x27; containing names of student and their class(FY,SY,TY). Accept a student name from user and use binary search algorithm to check whether the name is present in the file and output the class of student otherwise output �Student not in the list�.
+
+
+student.txt
+
+Priya TY
+Trupti SY
+Vaishnavi FY
+Sonali SY
+Saroja TY
+Kranti TY
+Rama SY
+Kalpna TY
+
+
+#include &lt;stdio.h&gt;
+
+#include &lt;string.h&gt;
+
+
+typedef struct student
+
+{
+    
+
+	char name[30];
+    
+	char class[10];
+
+} STUDENT;
+
+
+STUDENT student[100];
+
+
+int read_file(STUDENT *a)
+
+{
+    
+	  int i = 0;
+  
+	  FILE *fp;
+
+    
+	  if ((fp = fopen(&quot;student.txt&quot;, &quot;r&quot;)) != NULL)
+  
+	  {
+        
+		while (!feof(fp))
+       
+		 {
+            
+			fscanf(fp, &quot;%s%s&quot;, a[i].name, a[i].class);
+          
+		        i++;
+     
+		 }
+        
+		fclose(fp);
+   
+	 }
+
+    
+		return (i - 1);
+
+		}
+	
+
+void sort(STUDENT *a, int n)
+
+	{
+   
+		 int i, j;
+    
+		STUDENT t;
+
+    
+		for (i = 1; i &lt; n; i++)
+    
+		{
+        
+			for (j = 0; j &lt; n - i; j++)
+       
+			 {
+            
+				if (strcmp(a[j].name, a[j + 1].name) &gt; 0)
+           
+				 {
+                
+					t = a[j];
+                
+					a[j] = a[j + 1];
+                
+					a[j + 1] = t;
+          
+				 }
+        
+			}
+   
+		 }
+	
+}
+
+
+	void b_search(STUDENT *a, int n, char key[30])
+
+	{
+    	
+		int top, bottom, mid;
+
+
+	        top = 0;
+   
+	        bottom = n - 1;
+
+    
+		while (bottom &gt;= top)
+   
+		 {
+        
+			mid = (top + bottom) / 2;
+
+        
+			if (strcmp(key, a[mid].name) == 0)
+        
+			{
+            
+				printf(&quot;\nClass : %s\n&quot;, a[mid].class);
+           
+				 break;
+       
+			 }
+       
+		 else if (strcmp(key, a[mid].name) &lt; 0)
+           
+		 bottom = mid - 1;
+        
+		else
+           
+		 top = mid + 1;
+    
+		}
+
+   
+	 if (bottom &lt; top)
+        
+		printf(&quot;\nStudent not in the list\n&quot;);
+
+	}	
+		
+
+void main() 
+
+		{
+   
+			 char key[30];
+    
+			int n;
+
+  
+			  n = read_file(student);
+   
+			 sort(student, n);
+
+    
+			printf(&quot;\nEnter student name : &quot;);
+    
+			scanf(&quot;%s&quot;, key);
+
+    
+		b_search(student, n, key);
+
+		}</pre>
+        <div class="copied">Copied ✓</div>
+      </div>
+    </article>
+    </section><section><h2>SORTING ASSIGNMENT</h2>
+    <article class="program" data-title="1. counting sort">
+      <button class="program-header" onclick="toggleProgram(this)">
+        <span>1. Counting Sort</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="program-body">
+        <button class="copy" onclick="copyProgram(this, 3)">COPY CODE</button>
+        <pre id="code-3">1) Counting sort
+
+#include&lt;stdio.h&gt;
+void countingsort(int a[10],int n,int k)
+{
+int i,c[20]={0},b[20];
+//count frequency of each element
+for(i=0;i&lt;n;i++)
+c[a[i]]+=1;
+//calculate starting position
+for(i=1;i&lt;=k;i++)
+{
+c[i]=c[i]+c[i-1];
+//printf(&quot;\n  %d&quot;,c[i]);
+}
+//Read the element in correct positin
+for(i=n-1;i&gt;=0;i--)
+{
+b[c[a[i]]-1]=a[i];
+c[a[i]]-=1;
+} 
+printf(&quot;\n the sorted output&quot;);
+for(i=0;i&lt;n;i++)
+printf(&quot;%d\t&quot;,b[i]);
+
+}
+int main()
+{
+int a[10],i,k,n;
+printf(&quot;\n how many elements&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+printf(&quot;\n enter the range&quot;);
+scanf(&quot;%d&quot;,&amp;k);
+printf(&quot;\n enter the elements&quot;);
+for(i=0;i&lt;n;i++)5
+{
+scanf(&quot;%d&quot;,&amp;a[i]);
+}
+countingsort(a,n,k);
+}
+
+========================================================================</pre>
+        <div class="copied">Copied ✓</div>
+      </div>
+    </article>
+    
+    <article class="program" data-title="2. merge sort">
+      <button class="program-header" onclick="toggleProgram(this)">
+        <span>2. Merge Sort</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="program-body">
+        <button class="copy" onclick="copyProgram(this, 4)">COPY CODE</button>
+        <pre id="code-4">2) Merge sort
+
+#include&lt;stdio.h&gt;
+void merge(int a[],int low,int mid,int high)
+{
+   int i,j,k,b[20];
+    i=low;
+    j=mid+1;
+    k=0;
+    while((i&lt;=mid)&amp;&amp;(j&lt;=high))
+    {
+      if(a[i]&lt;=a[j])
+         b[k++]=a[i++];
+      else
+         b[k++]=a[j++];
+     }
+     while(i&lt;=mid)
+        b[k++]=a[i++];
+        
+     while(j&lt;=high)
+         b[k++]=a[j++];
+         
+       /* Copy merged elements from b to a */
+       
+       for(i=low,k=0;i&lt;=high;i++,k++)   
+              a[i]=b[k];
+       }
+       
+       void mergesort(int a[],int low,int high)
+       {
+          int mid;
+          if(low&lt;high)   //more than one element
+          {
+            mid=(low+high)/2;   //Divide into two sublists
+            mergesort(a,low,mid);  //sort 1st sublist
+            mergesort(a,mid+1,high);  //Sort 2nd sublist
+            merge(a,low,mid,high);  //Merge sorted sublist
+            }
+            }
+void main()
+{
+ int a[20],i,n;
+ printf(&quot;\nHow many numbers:&quot;);
+ scanf(&quot;%d&quot;,&amp;n);
+ printf(&quot;Enter the unsorted numbers:&quot;);
+ for(i=0;i&lt;n;i++)
+ scanf(&quot;%d&quot;,&amp;a[i]);
+ mergesort(a,0,n-1);
+ printf(&quot;\n The sorted list is:&quot;);
+ for(i=0;i&lt;n;i++)
+  printf(&quot;%d\t&quot;,a[i]);
+  }
+  
+
+========================================================================</pre>
+        <div class="copied">Copied ✓</div>
+      </div>
+    </article>
+    
+    <article class="program" data-title="3. quick sort">
+      <button class="program-header" onclick="toggleProgram(this)">
+        <span>3. Quick Sort</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="program-body">
+        <button class="copy" onclick="copyProgram(this, 5)">COPY CODE</button>
+        <pre id="code-5">3) Quick Sort
+
+#include&lt;stdio.h&gt;
+int partition(int a[10],int lb,int ub)
+{
+int up ,dn,temp,pivot;
+up=ub;
+dn=lb+1;
+pivot=a[lb];
+do
+{
+while((a[dn]&lt;pivot)&amp;&amp;(dn&lt;=ub))
+dn++;
+while((a[up]&gt;pivot)&amp;&amp;(up&gt;lb))
+up--;
+if(dn&lt;up)
+{
+temp=a[dn];
+a[dn]=a[up];
+a[up]=temp;
+}
+}
+while(dn&lt;up);
+a[lb]=a[up];
+a[up]=pivot;
+return up;
+}
+void quicksort(int a[10],int lb,int ub)
+{
+int j;
+if(lb&lt;ub)
+{
+j=partition(a,lb,ub);
+quicksort(a,lb,j-1);
+quicksort(a,j+1,ub);
+
+}
+
+}
+
+int main()
+{
+int a[10],n,i;
+
+printf(&quot;\nHow many elements:&quot;);
+scanf(&quot;%d&quot;,&amp;n);
+for(i=0;i&lt;n;i++)
+{
+printf(&quot;Enter the elements&quot;);
+scanf(&quot;%d&quot;,&amp;a[i]);
+}
+quicksort(a,0,n-1);
+printf(&quot;The sorted ouput is:&quot;);
+for(i=0;i&lt;n;i++)
+printf(&quot;%d\t&quot;,a[i]);
+}</pre>
+        <div class="copied">Copied ✓</div>
+      </div>
+    </article>
+    </section>
+<div id="empty" class="empty">No program found.</div>
+</main>
+</body>
+</html>
