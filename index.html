@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DS Practical Programs </title>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>DS Practical Programs</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101216;color:#f4f4f5;font-family:Arial,Helvetica,sans-serif}
@@ -29,7 +30,11 @@ pre{margin:0;padding:16px;background:#090b0e;border:1px solid #292e36;border-rad
 </style>
 <script>
 async function copyProgram(btn, id){
-  const text = document.getElementById("code-"+id).innerText;
+  const el = document.getElementById("code-"+id);
+  let text = el.innerText;
+  const lines = text.split("\n");
+  const firstCode = lines.findIndex(line => line.trim().startsWith("#include"));
+  if(firstCode >= 0) text = lines.slice(firstCode).join("\n").replace(/\n[-=]{10,}\s*$/,"").trim();
   try {
     await navigator.clipboard.writeText(text);
   } catch(e) {
@@ -63,18 +68,18 @@ function searchPrograms(){
 <header>
 <h1>DS Practical Programs</h1>
 <div class="sub">Single-click to open • COPY CODE to copy the complete program</div>
-<input id="search" oninput="searchPrograms()" placeholder="Search: Linear Search, Stack, Merge Sort...">
+<input id="search" oninput="searchPrograms()" placeholder="Search: Linear Search, Stack, Merge Sort..."/>
 </header>
 <main>
 <section><h2>SEARCHING ASSIGNMENT 1</h2>
-    <article class="program" data-title="1. linear search">
-      <button class="program-header" onclick="toggleProgram(this)">
-        <span>1. Linear Search</span>
-        <span class="arrow">▶</span>
-      </button>
-      <div class="program-body">
-        <button class="copy" onclick="copyProgram(this, 0)">COPY CODE</button>
-        <pre id="code-0">1) Linear Search 
+<article class="program" data-title="1. linear search">
+<button class="program-header" onclick="toggleProgram(this)">
+<span>1. Linear Search</span>
+<span class="arrow">▶</span>
+</button>
+<div class="program-body">
+<button class="copy" onclick="copyProgram(this, 0)">COPY CODE</button>
+<pre id="code-0">1) Linear Search 
 
 #include&lt;stdio.h&gt;
 int linearsearch (int a[],int n,int key)
@@ -88,34 +93,33 @@ return -1;
 void main()
 {
 int a[10],n,i,key,pos;
-printf(&quot;\nHow many elements: &quot;);
-scanf(&quot;%d&quot;,&amp;n);
+printf("\nHow many elements: ");
+scanf("%d",&amp;n);
 for(i=0;i&lt;n;i++)
 {
-printf(&quot;\nEnter the element: &quot;);
-scanf(&quot;%d&quot;,&amp;a[i]);
+printf("\nEnter the element: ");
+scanf("%d",&amp;a[i]);
 }
-printf(&quot;\nEnter the element to be searched:&quot;);
-scanf(&quot;%d&quot;,&amp;key);
+printf("\nEnter the element to be searched:");
+scanf("%d",&amp;key);
 pos=linearsearch(a,n,key);
 if(pos==-1)
-printf(&quot;\nElement not found&quot;);
+printf("\nElement not found");
 else
-printf(&quot;\nElement found at position %d&quot;,pos);
+printf("\nElement found at position %d",pos);
 }
 -------------------------------------------------------------------------------</pre>
-        <div class="copied">Copied ✓</div>
-      </div>
-    </article>
-    
-    <article class="program" data-title="2. binary search">
-      <button class="program-header" onclick="toggleProgram(this)">
-        <span>2. Binary Search</span>
-        <span class="arrow">▶</span>
-      </button>
-      <div class="program-body">
-        <button class="copy" onclick="copyProgram(this, 1)">COPY CODE</button>
-        <pre id="code-1">2) Binary Search 
+<div class="copied">Copied ✓</div>
+</div>
+</article>
+<article class="program" data-title="2. binary search">
+<button class="program-header" onclick="toggleProgram(this)">
+<span>2. Binary Search</span>
+<span class="arrow">▶</span>
+</button>
+<div class="program-body">
+<button class="copy" onclick="copyProgram(this, 1)">COPY CODE</button>
+<pre id="code-1">2) Binary Search 
 
 #include&lt;stdio.h&gt;
 int binarysearch(int a[20],int n,int key)
@@ -152,36 +156,35 @@ void Bubblesort(int a[20],int n)
 void main()
 {
    int a[20],i,n,key,pos;
-   printf(&quot;\nHow many elements:&quot;);
-   scanf(&quot;%d&quot;,&amp;n);
+   printf("\nHow many elements:");
+   scanf("%d",&amp;n);
    for(i=0;i&lt;n;i++)
    {
-     printf(&quot;Enter the elements:&quot;);
-     scanf(&quot;%d&quot;,&amp;a[i]);
+     printf("Enter the elements:");
+     scanf("%d",&amp;a[i]);
      }
    Bubblesort(a,n);
-   printf(&quot;\nEnter the key to by searched:&quot;);
-   scanf(&quot;%d&quot;,&amp;key);
+   printf("\nEnter the key to by searched:");
+   scanf("%d",&amp;key);
    pos=binarysearch(a,n,key);
    if(pos==-1)
-     printf(&quot;\nElement not found:&quot;);
+     printf("\nElement not found:");
    else
-     printf(&quot;\nElement found at position %d&quot;,pos);
+     printf("\nElement found at position %d",pos);
      }
 
 ----------------------------------------------------------------</pre>
-        <div class="copied">Copied ✓</div>
-      </div>
-    </article>
-    
-    <article class="program" data-title="3. student file + binary search">
-      <button class="program-header" onclick="toggleProgram(this)">
-        <span>3. Student File + Binary Search</span>
-        <span class="arrow">▶</span>
-      </button>
-      <div class="program-body">
-        <button class="copy" onclick="copyProgram(this, 2)">COPY CODE</button>
-        <pre id="code-2">3) Read the data from file &#x27;student.txt&#x27; containing names of student and their class(FY,SY,TY). Accept a student name from user and use binary search algorithm to check whether the name is present in the file and output the class of student otherwise output �Student not in the list�.
+<div class="copied">Copied ✓</div>
+</div>
+</article>
+<article class="program" data-title="3. student file + binary search">
+<button class="program-header" onclick="toggleProgram(this)">
+<span>3. Student File + Binary Search</span>
+<span class="arrow">▶</span>
+</button>
+<div class="program-body">
+<button class="copy" onclick="copyProgram(this, 2)">COPY CODE</button>
+<pre id="code-2">3) Read the data from file 'student.txt' containing names of student and their class(FY,SY,TY). Accept a student name from user and use binary search algorithm to check whether the name is present in the file and output the class of student otherwise output �Student not in the list�.
 
 
 student.txt
@@ -225,7 +228,7 @@ int read_file(STUDENT *a)
 	  FILE *fp;
 
     
-	  if ((fp = fopen(&quot;student.txt&quot;, &quot;r&quot;)) != NULL)
+	  if ((fp = fopen("student.txt", "r")) != NULL)
   
 	  {
         
@@ -233,7 +236,7 @@ int read_file(STUDENT *a)
        
 		 {
             
-			fscanf(fp, &quot;%s%s&quot;, a[i].name, a[i].class);
+			fscanf(fp, "%s%s", a[i].name, a[i].class);
           
 		        i++;
      
@@ -308,7 +311,7 @@ void sort(STUDENT *a, int n)
         
 			{
             
-				printf(&quot;\nClass : %s\n&quot;, a[mid].class);
+				printf("\nClass : %s\n", a[mid].class);
            
 				 break;
        
@@ -327,7 +330,7 @@ void sort(STUDENT *a, int n)
    
 	 if (bottom &lt; top)
         
-		printf(&quot;\nStudent not in the list\n&quot;);
+		printf("\nStudent not in the list\n");
 
 	}	
 		
@@ -346,26 +349,26 @@ void main()
 			 sort(student, n);
 
     
-			printf(&quot;\nEnter student name : &quot;);
+			printf("\nEnter student name : ");
     
-			scanf(&quot;%s&quot;, key);
+			scanf("%s", key);
 
     
 		b_search(student, n, key);
 
 		}</pre>
-        <div class="copied">Copied ✓</div>
-      </div>
-    </article>
-    </section><section><h2>SORTING ASSIGNMENT</h2>
-    <article class="program" data-title="1. counting sort">
-      <button class="program-header" onclick="toggleProgram(this)">
-        <span>1. Counting Sort</span>
-        <span class="arrow">▶</span>
-      </button>
-      <div class="program-body">
-        <button class="copy" onclick="copyProgram(this, 3)">COPY CODE</button>
-        <pre id="code-3">1) Counting sort
+<div class="copied">Copied ✓</div>
+</div>
+</article>
+</section><section><h2>SORTING ASSIGNMENT</h2>
+<article class="program" data-title="1. counting sort">
+<button class="program-header" onclick="toggleProgram(this)">
+<span>1. Counting Sort</span>
+<span class="arrow">▶</span>
+</button>
+<div class="program-body">
+<button class="copy" onclick="copyProgram(this, 3)">COPY CODE</button>
+<pre id="code-3">1) Counting sort
 
 #include&lt;stdio.h&gt;
 void countingsort(int a[10],int n,int k)
@@ -378,7 +381,7 @@ c[a[i]]+=1;
 for(i=1;i&lt;=k;i++)
 {
 c[i]=c[i]+c[i-1];
-//printf(&quot;\n  %d&quot;,c[i]);
+//printf("\n  %d",c[i]);
 }
 //Read the element in correct positin
 for(i=n-1;i&gt;=0;i--)
@@ -386,39 +389,38 @@ for(i=n-1;i&gt;=0;i--)
 b[c[a[i]]-1]=a[i];
 c[a[i]]-=1;
 } 
-printf(&quot;\n the sorted output&quot;);
+printf("\n the sorted output");
 for(i=0;i&lt;n;i++)
-printf(&quot;%d\t&quot;,b[i]);
+printf("%d\t",b[i]);
 
 }
 int main()
 {
 int a[10],i,k,n;
-printf(&quot;\n how many elements&quot;);
-scanf(&quot;%d&quot;,&amp;n);
-printf(&quot;\n enter the range&quot;);
-scanf(&quot;%d&quot;,&amp;k);
-printf(&quot;\n enter the elements&quot;);
+printf("\n how many elements");
+scanf("%d",&amp;n);
+printf("\n enter the range");
+scanf("%d",&amp;k);
+printf("\n enter the elements");
 for(i=0;i&lt;n;i++)5
 {
-scanf(&quot;%d&quot;,&amp;a[i]);
+scanf("%d",&amp;a[i]);
 }
 countingsort(a,n,k);
 }
 
 ========================================================================</pre>
-        <div class="copied">Copied ✓</div>
-      </div>
-    </article>
-    
-    <article class="program" data-title="2. merge sort">
-      <button class="program-header" onclick="toggleProgram(this)">
-        <span>2. Merge Sort</span>
-        <span class="arrow">▶</span>
-      </button>
-      <div class="program-body">
-        <button class="copy" onclick="copyProgram(this, 4)">COPY CODE</button>
-        <pre id="code-4">2) Merge sort
+<div class="copied">Copied ✓</div>
+</div>
+</article>
+<article class="program" data-title="2. merge sort">
+<button class="program-header" onclick="toggleProgram(this)">
+<span>2. Merge Sort</span>
+<span class="arrow">▶</span>
+</button>
+<div class="program-body">
+<button class="copy" onclick="copyProgram(this, 4)">COPY CODE</button>
+<pre id="code-4">2) Merge sort
 
 #include&lt;stdio.h&gt;
 void merge(int a[],int low,int mid,int high)
@@ -460,31 +462,30 @@ void merge(int a[],int low,int mid,int high)
 void main()
 {
  int a[20],i,n;
- printf(&quot;\nHow many numbers:&quot;);
- scanf(&quot;%d&quot;,&amp;n);
- printf(&quot;Enter the unsorted numbers:&quot;);
+ printf("\nHow many numbers:");
+ scanf("%d",&amp;n);
+ printf("Enter the unsorted numbers:");
  for(i=0;i&lt;n;i++)
- scanf(&quot;%d&quot;,&amp;a[i]);
+ scanf("%d",&amp;a[i]);
  mergesort(a,0,n-1);
- printf(&quot;\n The sorted list is:&quot;);
+ printf("\n The sorted list is:");
  for(i=0;i&lt;n;i++)
-  printf(&quot;%d\t&quot;,a[i]);
+  printf("%d\t",a[i]);
   }
   
 
 ========================================================================</pre>
-        <div class="copied">Copied ✓</div>
-      </div>
-    </article>
-    
-    <article class="program" data-title="3. quick sort">
-      <button class="program-header" onclick="toggleProgram(this)">
-        <span>3. Quick Sort</span>
-        <span class="arrow">▶</span>
-      </button>
-      <div class="program-body">
-        <button class="copy" onclick="copyProgram(this, 5)">COPY CODE</button>
-        <pre id="code-5">3) Quick Sort
+<div class="copied">Copied ✓</div>
+</div>
+</article>
+<article class="program" data-title="3. quick sort">
+<button class="program-header" onclick="toggleProgram(this)">
+<span>3. Quick Sort</span>
+<span class="arrow">▶</span>
+</button>
+<div class="program-body">
+<button class="copy" onclick="copyProgram(this, 5)">COPY CODE</button>
+<pre id="code-5">3) Quick Sort
 
 #include&lt;stdio.h&gt;
 int partition(int a[10],int lb,int ub)
@@ -528,23 +529,235 @@ int main()
 {
 int a[10],n,i;
 
-printf(&quot;\nHow many elements:&quot;);
-scanf(&quot;%d&quot;,&amp;n);
+printf("\nHow many elements:");
+scanf("%d",&amp;n);
 for(i=0;i&lt;n;i++)
 {
-printf(&quot;Enter the elements&quot;);
-scanf(&quot;%d&quot;,&amp;a[i]);
+printf("Enter the elements");
+scanf("%d",&amp;a[i]);
 }
 quicksort(a,0,n-1);
-printf(&quot;The sorted ouput is:&quot;);
+printf("The sorted ouput is:");
 for(i=0;i&lt;n;i++)
-printf(&quot;%d\t&quot;,a[i]);
+printf("%d\t",a[i]);
 }</pre>
-        <div class="copied">Copied ✓</div>
-      </div>
-    </article>
-    </section>
-<div id="empty" class="empty">No program found.</div>
-</main>
+<div class="copied">Copied ✓</div>
+</div>
+</article>
+</section>
+<div class="empty" id="empty">No program found.</div>
+<section><h2>LINKED LIST ASSIGNMENT</h2><article class="program" data-title="7. singly linked list"><button class="program-header" onclick="toggleProgram(this)"><span>7. Singly Linked List</span><span class="arrow">▶</span></button><div class="program-body"><button class="copy" onclick="copyProgram(this, 12)">COPY CODE</button><pre id="code-12">1) Write a menu driven program for the following operations on singly linked list
+. i. Create and display a linked list of n nodes.
+ii. Search a particular element from a linked list.
+
+1 ) Write a C program to implement singly linked list with perform this operations:
+CREATE,DISPLAY,DELETE NODE,SEARCH NODE,CONCATENATE
+
+1 ) Write a C program to implement singly linked list with perform this operations:
+CREATE,DISPLAY,DELETE NODE,SEARCH NODE,CONCATENATE
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+typedef struct node
+{
+ int info;
+ struct node *next;
+} NODE;
+/* Create List */
+void createlist(NODE *head)
+{
+ int n, i;
+ NODE *last, *newnode;
+ printf("Enter how many nodes you want to create: ");
+ scanf("%d", &amp;n);
+ last = head;
+ for (i = 0; i &lt; n; i++)
+ {
+ newnode = (NODE *)malloc(sizeof(NODE));
+ printf("Enter the info: ");
+ scanf("%d", &amp;newnode-&gt;info);
+ newnode-&gt;next = NULL;
+ last-&gt;next = newnode;
+ last = newnode;
+ }
+}
+/* Display List */
+void display(NODE *head)
+{
+ NODE *temp;
+ if (head-&gt;next == NULL)
+ {
+ printf("List is empty.\n");
+ return;
+ }
+ printf("List: ");
+ for (temp = head-&gt;next; temp != NULL; temp = temp-&gt;next)
+ {
+ printf("%d\t", temp-&gt;info);
+ }
+ printf("\n");
+}
+/* Delete a node */
+void deleteNode(NODE *head)
+{
+ int value;
+ NODE *temp, *prev;
+ printf("Enter value to delete: ");
+ scanf("%d", &amp;value);
+ prev = head;
+ temp = head-&gt;next;
+ while (temp != NULL)
+ {
+ if (temp-&gt;info == value)
+ {
+ prev-&gt;next = temp-&gt;next;
+ free(temp);
+ printf("Node deleted successfully.\n");
+ return;
+ }
+ prev = temp;
+ temp = temp-&gt;next;
+ }
+ printf("Value not found.\n");
+}
+/* Search a node */
+void search(NODE *head)
+{
+ int value, position = 1;
+ NODE *temp;
+ printf("Enter value to search: ");
+ scanf("%d", &amp;value);
+ temp = head-&gt;next;
+ while (temp != NULL)
+ {
+ if (temp-&gt;info == value)
+ {
+ printf("Value found at position %d.\n", position);
+ return;
+ }
+ temp = temp-&gt;next;
+ position++;
+ }
+ printf("Value not found.\n");
+}
+/* Concatenate two lists */
+void concatenate(NODE *head1, NODE *head2)
+{
+ NODE *temp;
+ if (head2-&gt;next == NULL)
+ {
+ printf("Second list is empty.\n");
+ return;
+ }
+ temp = head1;
+ while (temp-&gt;next != NULL)
+ {
+ temp = temp-&gt;next;
+ }
+ temp-&gt;next = head2-&gt;next;
+ printf("Lists concatenated successfully.\n");
+}
+int main()
+{
+ NODE *head1, *head2;
+ int choice;
+ head1 = (NODE *)malloc(sizeof(NODE));
+ head2 = (NODE *)malloc(sizeof(NODE));
+ head1-&gt;next = NULL;
+ head2-&gt;next = NULL;
+ do
+ {
+ printf("\n\n--- SINGLY LINKED LIST ---");
+ printf("\n1. CREATE LIST");
+ printf("\n2. DISPLAY LIST");
+ printf("\n3. DELETE NODE");
+ printf("\n4. SEARCH NODE");
+ printf("\n5. CREATE SECOND LIST");
+ printf("\n6. CONCATENATE LISTS");
+ printf("\n7. EXIT");
+ printf("\n\nEnter your choice: ");
+ scanf("%d", &amp;choice);
+ switch (choice)
+ {
+ case 1:
+ createlist(head1);
+ break;
+ case 2:
+ display(head1);
+ break;
+ case 3:
+ deleteNode(head1);
+ break;
+ case 4:
+ search(head1);
+ break;
+ case 5:
+ createlist(head2);
+ break;
+ case 6:
+ concatenate(head1, head2);
+ break;
+ case 7:
+ printf("Exit…!!!\n");
+ break;
+ default:
+ printf("Invalid choice.\n");
+ }
+ } while (choice != 7);
+ free(head1);
+ free(head2);
+ return 0;
+}</pre><div class="copied">Copied ✓</div></div></article><article class="program" data-title="8. doubly linked list"><button class="program-header" onclick="toggleProgram(this)"><span>8. Doubly Linked List</span><span class="arrow">▶</span></button><div class="program-body"><button class="copy" onclick="copyProgram(this, 13)">COPY CODE</button><pre id="code-13">1) Write a menu driven program for the following operations on doubly link list.
+i. Create and Display a link list of n nodes
+ii. Insert an element in a linked list in a particular position
+
+#include&lt;stdio.&gt;
+#include&lt;stdlib.h&gt;
+#include typedef struct node
+{
+int info;
+struct node *next, *prev;
+} NODE;
+void createlist(NODE *head)
+{
+ int n, i;
+ NODE *last, *newnode;
+ printf("\nEnter how many nodes you want to create");
+ scanf("%d", &amp;n);
+ last = head;
+ for (i = 0; i &lt; n; i++)
+ {
+ newnode = (NODE *)malloc(sizeof(NODE));
+ newnode-&gt;next = newnode-&gt;prev = NULL;
+ printf("\nEnter the info");
+ scanf("%d", &amp;newnode-&gt;info);
+ last-&gt;next = newnode;
+ newnode-&gt;prev = last; last = newnode;
+ }
+}
+void display(NODE *head)
+{
+ NODE *temp;
+ for (temp = head-&gt;next; temp != NULL; temp = temp-&gt;next)
+ printf("%d\t", temp-&gt;info);
+}
+void main()
+{
+ NODE *head;
+ int choice;
+ head = (NODE *)malloc(sizeof(NODE));
+ head-&gt;next = NULL;
+ do
+ {
+ printf("\n1:CREATE \n 2.DISPLAY");
+ printf("\n\nEnter your choice");
+ scanf("%d", &amp;choice);
+ switch (choice)
+ {
+ case 1: createlist(head); break;
+ case 2: display(head); break;
+ }
+ } while (choice != 3);
+}</pre><div class="copied">Copied ✓</div></div></article></section></main>
 </body>
 </html>
